@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-labels-bad-regex
+  namespace: gatekeeper-lab
+  labels:
+    appName: NginxWeb
+    owner: Training-Team
+spec:
+  containers:
+    - name: nginx
+      image: docker.io/library/nginx:1.25
+      ports:
+        - containerPort: 80

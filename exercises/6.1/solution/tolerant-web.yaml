@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tolerant-web
+  namespace: sched
+spec:
+  tolerations:
+  - key: dedicated
+    operator: Equal
+    value: team-a
+    effect: NoSchedule
+  containers:
+  - name: web
+    image: nginx:1.27.1

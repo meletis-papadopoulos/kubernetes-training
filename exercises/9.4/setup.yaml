@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payments
+  namespace: ts94
+  labels:
+    app: payments
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: payments
+  template:
+    metadata:
+      labels:
+        app: payments
+    spec:
+      containers:
+        - name: web
+          image: nginx:1.27.1
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 25m
+              memory: 32Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payments
+  namespace: ts94
+spec:
+  selector:
+    app: payment
+  ports:
+    - port: 80
+      targetPort: 80

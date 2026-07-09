@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: slow-starter
+  namespace: training
+  labels:
+    app: slow-starter
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.25
+      command:
+        - /bin/sh
+        - -c
+        - "echo 'Simulating 30s boot...'; sleep 30; echo 'Boot complete'; exec nginx -g 'daemon off;'"
+      ports:
+        - containerPort: 80
+      livenessProbe:
+        httpGet:
+          path: /
+          port: 80
+        initialDelaySeconds: 2
+        periodSeconds: 5
+        failureThreshold: 2
+      resources:
+        requests:
+          cpu: 50m
+          memory: 32Mi

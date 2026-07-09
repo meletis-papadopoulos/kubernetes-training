@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: api-pod
+  namespace: sa-ex
+spec:
+  serviceAccountName: api-caller
+  containers:
+  - name: kubectl
+    image: alpine/k8s:1.35.1
+    command: ["sleep", "3600"]

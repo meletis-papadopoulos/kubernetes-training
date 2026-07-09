@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: emptydir-pod
+  namespace: training
+spec:
+  containers:
+    - name: writer
+      image: busybox:1.36
+      command:
+        - /bin/sh
+        - -c
+        - "while true; do echo \"$(date) - Hello from writer\" >> /data/log.txt; sleep 5; done"
+      volumeMounts:
+        - name: shared-data
+          mountPath: /data
+    - name: reader
+      image: busybox:1.36
+      command:
+        - /bin/sh
+        - -c
+        - "tail -f /data/log.txt"
+      volumeMounts:
+        - name: shared-data
+          mountPath: /data
+  volumes:
+    - name: shared-data
+      emptyDir: {}

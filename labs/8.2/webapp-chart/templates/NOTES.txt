@@ -1,0 +1,4 @@
+{{ .Release.Name }} installed: {{ .Values.replicaCount }} replica(s) of {{ .Values.image.repository }}:{{ .Values.image.tag }} ({{ .Values.service.type }} Service on port {{ .Values.service.port }}).
+
+Reach it from inside the cluster:
+  kubectl run tmp --rm -it --image=busybox:1.36 -n {{ .Release.Namespace }} --restart=Never -- wget -qO- http://{{ .Release.Name }}

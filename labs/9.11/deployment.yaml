@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: monitored-app
+  namespace: training
+  labels:
+    app: monitored
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: monitored
+  template:
+    metadata:
+      labels:
+        app: monitored
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.25
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 100m
+              memory: 128Mi

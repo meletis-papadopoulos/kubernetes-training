@@ -1,0 +1,13 @@
+# Selecting app=dns-client for Egress with NO egress rules = deny ALL outbound
+# traffic from this pod, including DNS lookups (UDP/TCP 53 to kube-dns).
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: dns-client-deny-egress
+  namespace: training
+spec:
+  podSelector:
+    matchLabels:
+      app: dns-client
+  policyTypes:
+    - Egress

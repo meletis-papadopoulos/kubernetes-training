@@ -1,0 +1,18 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sRequiredLabels
+metadata:
+  name: warn-pod-labels
+spec:
+  enforcementAction: warn
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+    namespaces: ["gatekeeper-lab"]
+  parameters:
+    message: "Warning: pods should have labels of owner and appName."
+    labels:
+      - key: owner
+        allowedRegex: ""
+      - key: appName
+        allowedRegex: ""

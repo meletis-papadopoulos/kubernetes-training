@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pvc-pod
+  namespace: training
+spec:
+  containers:
+    - name: app
+      image: busybox:1.36
+      command:
+        - /bin/sh
+        - -c
+        - "echo 'Persistent data written at: '$(date) > /data/output.txt && sleep 3600"
+      volumeMounts:
+        - name: persistent-storage
+          mountPath: /data
+  volumes:
+    - name: persistent-storage
+      persistentVolumeClaim:
+        claimName: lab-pvc

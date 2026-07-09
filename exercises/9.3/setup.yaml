@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-config
+  namespace: ts93
+data:
+  DB_HOST: db.internal
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-creds
+  namespace: ts93
+type: Opaque
+stringData:
+  password: S3cr3tP@ss
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: api
+  namespace: ts93
+  labels:
+    app: api
+spec:
+  containers:
+    - name: app
+      image: busybox:1.36
+      command: ["sh", "-c", "echo DB_HOST=$DB_HOST PW_SET=${DB_PASSWORD:+yes} && sleep 3600"]
+      env:
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: db-config
+              key: DB_HOST
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-creds
+              key: passwd
+  restartPolicy: Always

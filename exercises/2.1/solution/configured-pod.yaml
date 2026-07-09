@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: configured
+  namespace: core
+spec:
+  containers:
+  - name: talker
+    image: busybox:1.36
+    command: ["sh", "-c"]
+    args: ["echo \"$GREETING from $(hostname)\"; while true; do sleep 30; done"]
+    env:
+    - name: GREETING
+      value: "hello-core"
+    ports:
+    - containerPort: 8080

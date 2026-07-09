@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: good
+  namespace: secure
+  labels:
+    owner: team-a
+spec:
+  containers:
+  - name: app
+    image: nginx:1.27.1

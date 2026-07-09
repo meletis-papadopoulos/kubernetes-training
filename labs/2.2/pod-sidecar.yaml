@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sidecar-demo
+  namespace: training
+  labels:
+    app: sidecar-demo
+spec:
+  volumes:
+    - name: shared
+      emptyDir: {}
+  containers:
+    # main container: writes a timestamp into the shared volume every 5s
+    - name: app
+      image: busybox:1.36
+      command: ["sh", "-c", "while true; do date >> /shared/log.txt; sleep 5; done"]
+      volumeMounts:
+        - name: shared
+          mountPath: /shared
+    # sidecar container: tails the same file from the shared volume
+    - name: sidecar
+      image: busybox:1.36
+      command: ["sh", "-c", "sleep 6; tail -f /shared/log.txt"]
+      volumeMounts:
+        - name: shared
+          mountPath: /shared

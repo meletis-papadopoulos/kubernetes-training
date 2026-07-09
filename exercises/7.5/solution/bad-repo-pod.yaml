@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: bad-repo
+  namespace: secure
+  labels:
+    owner: team-a
+spec:
+  containers:
+  - name: app
+    image: quay.io/prometheus/busybox

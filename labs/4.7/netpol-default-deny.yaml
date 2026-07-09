@@ -1,0 +1,12 @@
+# Selecting app=web for Ingress with NO ingress rules = deny ALL inbound to web.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: web-default-deny
+  namespace: training
+spec:
+  podSelector:
+    matchLabels:
+      app: web
+  policyTypes:
+    - Ingress

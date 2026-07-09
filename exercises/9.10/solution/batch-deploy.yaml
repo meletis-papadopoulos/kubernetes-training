@@ -1,0 +1,29 @@
+# Reference workload - unchanged from setup.yaml. The fault in this exercise is at the
+# NODE level (nodes cordoned), not in this manifest; the fix is `kubectl uncordon`, not a
+# manifest edit. This file is the expected healthy end-state workload.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: batch
+  namespace: ts910
+  labels:
+    app: batch
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: batch
+  template:
+    metadata:
+      labels:
+        app: batch
+    spec:
+      containers:
+        - name: app
+          image: nginx:1.27.1
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 25m
+              memory: 32Mi

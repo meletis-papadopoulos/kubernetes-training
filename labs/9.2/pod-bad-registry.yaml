@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: bad-registry-pod
+  namespace: training
+spec:
+  containers:
+    - name: app
+      image: registry.invalid.example.com/nginx:1.25

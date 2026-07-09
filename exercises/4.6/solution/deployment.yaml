@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: secure
+  namespace: net46
+  labels:
+    app: secure
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: secure
+  template:
+    metadata:
+      labels:
+        app: secure
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.27.1
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: secure-svc
+  namespace: net46
+spec:
+  type: ClusterIP
+  selector:
+    app: secure
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP

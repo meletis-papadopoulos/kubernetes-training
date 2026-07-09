@@ -1,0 +1,17 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sRequiredLabels
+metadata:
+  name: audit-pod-labels
+spec:
+  enforcementAction: dryrun
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+    namespaces: ["gatekeeper-lab"]
+  parameters:
+    labels:
+      - key: owner
+        allowedRegex: ""
+      - key: appName
+        allowedRegex: ""

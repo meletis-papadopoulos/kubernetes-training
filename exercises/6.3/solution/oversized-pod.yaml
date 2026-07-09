@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: oversized
+  namespace: q63
+spec:
+  containers:
+  - name: web
+    image: nginx:1.27.1
+    resources:
+      limits:
+        cpu: "2"
+      requests:
+        cpu: 100m

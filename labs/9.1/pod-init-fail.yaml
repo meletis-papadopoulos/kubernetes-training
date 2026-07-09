@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: init-fail-pod
+  namespace: training
+spec:
+  initContainers:
+    - name: prepare-data
+      image: busybox:1.36
+      command:
+        - /bin/sh
+        - -c
+        - "echo 'Fetching config from secret store...'; sleep 2; echo 'Config service unreachable'; exit 1"
+  containers:
+    - name: app
+      image: nginx:1.25

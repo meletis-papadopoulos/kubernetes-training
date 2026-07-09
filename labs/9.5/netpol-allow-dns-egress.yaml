@@ -1,0 +1,27 @@
+# Additive: combined with dns-client-deny-egress, this punches a single hole
+# for DNS - egress from dns-client to CoreDNS (kube-system, k8s-app=kube-dns)
+# on UDP/TCP 53 only. All other egress from dns-client remains blocked.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: dns-client-allow-dns-egress
+  namespace: training
+spec:
+  podSelector:
+    matchLabels:
+      app: dns-client
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+      ports:
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 53

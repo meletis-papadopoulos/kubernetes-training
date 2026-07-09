@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rollme
+  namespace: core
+  labels:
+    app: rollme
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: rollme
+  template:
+    metadata:
+      labels:
+        app: rollme
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.27.0
+        ports:
+        - containerPort: 80

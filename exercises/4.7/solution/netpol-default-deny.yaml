@@ -1,0 +1,12 @@
+# Selecting app=api for Ingress with NO ingress rules = deny ALL inbound to api.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: api-default-deny
+  namespace: net47
+spec:
+  podSelector:
+    matchLabels:
+      app: api
+  policyTypes:
+  - Ingress

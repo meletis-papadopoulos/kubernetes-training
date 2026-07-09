@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: bad
+  namespace: secure
+spec:
+  containers:
+  - name: app
+    image: nginx:1.27.1

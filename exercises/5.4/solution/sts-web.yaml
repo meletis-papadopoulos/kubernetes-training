@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sts
+  namespace: wl-demo
+spec:
+  clusterIP: None
+  selector:
+    app: sts
+  ports:
+  - port: 80
+    name: web
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: sts-web
+  namespace: wl-demo
+spec:
+  serviceName: sts
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sts
+  template:
+    metadata:
+      labels:
+        app: sts
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.27.1
+        ports:
+        - containerPort: 80
+          name: web
+        volumeMounts:
+        - name: data
+          mountPath: /usr/share/nginx/html
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 1Gi

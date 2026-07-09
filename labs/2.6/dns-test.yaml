@@ -1,0 +1,24 @@
+# Throwaway DNS probe for lab 2.6 — resolves the headless Service (all pod IPs)
+# and each StatefulSet pod's stable per-pod name. One-shot: apply, read logs, delete.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dns-test
+  namespace: training
+  labels:
+    app: dns-test
+spec:
+  restartPolicy: Never
+  containers:
+    - name: dns
+      image: busybox:1.36
+      command:
+        - sh
+        - -c
+        - |
+          echo "=== headless Service (returns ALL pod IPs) ==="
+          nslookup nginx-headless.training.svc.cluster.local
+          for i in 0 1 2; do
+            echo "=== per-pod stable DNS: nginx-stateful-$i ==="
+            nslookup nginx-stateful-$i.nginx-headless.training.svc.cluster.local
+          done

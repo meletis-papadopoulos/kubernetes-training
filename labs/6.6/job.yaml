@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: hello-job
+  namespace: training
+spec:
+  completions: 3
+  parallelism: 2
+  template:
+    metadata:
+      labels:
+        app: hello-job
+    spec:
+      containers:
+        - name: worker
+          image: busybox:1.36
+          command:
+            - /bin/sh
+            - -c
+            - 'echo "Hello from Job" && sleep 5'
+      restartPolicy: Never
+  backoffLimit: 4

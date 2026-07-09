@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nodeselector-pending-pod
+  namespace: training
+spec:
+  nodeSelector:
+    disktype: nvme-fast
+  containers:
+    - name: app
+      image: nginx:1.25
+      resources:
+        requests:
+          memory: 32Mi
+          cpu: 50m

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: app-data-pvc
+  namespace: training
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: fast-ssd-premium
+  resources:
+    requests:
+      storage: 1Gi

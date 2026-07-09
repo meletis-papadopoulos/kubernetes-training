@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hnode-headless
+  namespace: net44
+spec:
+  clusterIP: None
+  selector:
+    app: hnode
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP

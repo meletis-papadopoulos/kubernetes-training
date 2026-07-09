@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: log-crash
+  namespace: training
+  labels:
+    app: log-crash
+spec:
+  containers:
+    - name: crasher
+      image: busybox:1.36
+      command:
+        - /bin/sh
+        - -c
+        - "echo \"crash attempt at $(date)\"; sleep 3; exit 1"
+  restartPolicy: Always

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: checkout
+  namespace: ts91
+  labels:
+    app: checkout
+spec:
+  containers:
+    - name: app
+      image: busybox:1.36
+      command:
+        - sh
+        - -c
+        - "echo 'checkout starting'; echo 'FATAL: could not open /config/settings.conf' >&2; exit 1"
+  restartPolicy: Always

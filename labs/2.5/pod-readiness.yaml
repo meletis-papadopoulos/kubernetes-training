@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: readiness-test
+  namespace: training
+  labels:
+    app: readiness-test
+spec:
+  containers:
+    - name: app
+      image: busybox:1.36
+      command:
+        - /bin/sh
+        - -c
+        - "sleep 30 && touch /tmp/ready && echo 'App is ready!' && sleep 3600"
+      readinessProbe:
+        exec:
+          command:
+            - cat
+            - /tmp/ready
+        initialDelaySeconds: 5
+        periodSeconds: 5
+        failureThreshold: 10

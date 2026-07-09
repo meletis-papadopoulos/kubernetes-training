@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: object-counts
+  namespace: q63
+spec:
+  hard:
+    count/deployments.apps: "2"
+    count/services: "2"
+    count/configmaps: "2"

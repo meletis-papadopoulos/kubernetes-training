@@ -1,0 +1,16 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sAllowedRepos
+metadata:
+  name: allow-only-approved-repos
+spec:
+  enforcementAction: deny
+  match:
+    kinds:
+      - apiGroups: ["apps"]
+        kinds: ["Deployment", "ReplicaSet", "DaemonSet", "StatefulSet"]
+      - apiGroups: [""]
+        kinds: ["Pod"]
+    namespaces: ["gatekeeper-lab"]
+  parameters:
+    repos:
+      - "docker.io"

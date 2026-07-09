@@ -1,0 +1,15 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: lab-cert
+  namespace: training
+spec:
+  secretName: lab-cert-tls
+  issuerRef:
+    name: selfsigned-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - lab.example.com
+    - "*.lab.example.com"
+  duration: 2160h
+  renewBefore: 360h

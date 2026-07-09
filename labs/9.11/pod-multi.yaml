@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: log-multi
+  namespace: training
+  labels:
+    app: log-multi
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.25
+      ports:
+        - containerPort: 80
+      volumeMounts:
+        - name: shared-logs
+          mountPath: /var/log/nginx
+    - name: sidecar
+      image: busybox:1.36
+      command:
+        - /bin/sh
+        - -c
+        - "tail -f /var/log/nginx/access.log"
+      volumeMounts:
+        - name: shared-logs
+          mountPath: /var/log/nginx
+  volumes:
+    - name: shared-logs
+      emptyDir: {}

@@ -1,0 +1,20 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sRequiredLabels
+metadata:
+  name: require-pod-labels-clusterwide
+spec:
+  enforcementAction: deny
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+    excludedNamespaces:
+      - gatekeeper-demo
+      - kube-system
+      - gatekeeper-system
+  parameters:
+    labels:
+      - key: owner
+        allowedRegex: "^[a-z][a-z0-9-]*$"
+      - key: appName
+        allowedRegex: "^[a-z][a-z0-9-]*$"

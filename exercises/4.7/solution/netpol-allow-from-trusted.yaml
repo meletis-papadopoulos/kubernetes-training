@@ -1,0 +1,20 @@
+# Additive: allow inbound to api ONLY from pods labelled app=trusted, on TCP 80.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: api-allow-from-trusted
+  namespace: net47
+spec:
+  podSelector:
+    matchLabels:
+      app: api
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: trusted
+    ports:
+    - protocol: TCP
+      port: 80

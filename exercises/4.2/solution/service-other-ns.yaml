@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: otherweb
+  namespace: net42b
+  labels:
+    app: otherweb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: otherweb
+  template:
+    metadata:
+      labels:
+        app: otherweb
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.27.1
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: otherweb
+  namespace: net42b
+spec:
+  type: ClusterIP
+  selector:
+    app: otherweb
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+    protocol: TCP

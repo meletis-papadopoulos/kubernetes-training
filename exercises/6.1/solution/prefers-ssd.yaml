@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: prefers-ssd
+  namespace: sched
+spec:
+  tolerations:
+  - key: dedicated
+    operator: Equal
+    value: team-a
+    effect: NoSchedule
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 1
+        preference:
+          matchExpressions:
+          - key: disktype
+            operator: In
+            values:
+            - ssd
+  containers:
+  - name: web
+    image: nginx:1.27.1

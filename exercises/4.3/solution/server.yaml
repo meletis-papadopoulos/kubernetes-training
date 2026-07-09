@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server
+  namespace: net43a
+  labels:
+    app: server
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: server
+  template:
+    metadata:
+      labels:
+        app: server
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.27.1
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: server-svc
+  namespace: net43a
+spec:
+  type: ClusterIP
+  selector:
+    app: server
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP

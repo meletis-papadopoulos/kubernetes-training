@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ns-web
+  namespace: ns-lab
+  labels:
+    app: ns-web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ns-web
+  template:
+    metadata:
+      labels:
+        app: ns-web
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.25
+          ports:
+            - containerPort: 80

@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: startup-test
+  namespace: training
+  labels:
+    app: startup-test
+spec:
+  containers:
+    - name: slow-app
+      image: busybox:1.36
+      command:
+        - /bin/sh
+        - -c
+        - "echo 'Starting slow app...' && sleep 20 && echo 'App started!' && while true; do echo 'healthy' > /tmp/health; sleep 5; done"
+      startupProbe:
+        exec:
+          command:
+            - cat
+            - /tmp/health
+        initialDelaySeconds: 5
+        periodSeconds: 5
+        failureThreshold: 10
+      livenessProbe:
+        exec:
+          command:
+            - cat
+            - /tmp/health
+        periodSeconds: 10
+        failureThreshold: 3

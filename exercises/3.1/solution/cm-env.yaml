@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cm-env
+  namespace: config-demo
+spec:
+  containers:
+  - name: app
+    image: busybox:1.36
+    command: ["sh", "-c", "env | sort && sleep 3600"]
+    envFrom:
+    - configMapRef:
+        name: app-config
+  restartPolicy: Never

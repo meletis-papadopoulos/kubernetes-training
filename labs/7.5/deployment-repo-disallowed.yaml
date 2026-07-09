@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-repo-disallowed
+  namespace: gatekeeper-lab
+  labels:
+    appName: redis-cache
+    owner: training-team
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+        appName: redis-cache
+        owner: training-team
+    spec:
+      containers:
+        - name: busybox
+          image: quay.io/prometheus/busybox:latest
+          command: ["sleep", "3600"]

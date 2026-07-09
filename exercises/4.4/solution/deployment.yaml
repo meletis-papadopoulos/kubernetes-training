@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hnode
+  namespace: net44
+  labels:
+    app: hnode
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hnode
+  template:
+    metadata:
+      labels:
+        app: hnode
+    spec:
+      containers:
+      - name: httpd
+        image: httpd:2.4.62
+        ports:
+        - containerPort: 80
